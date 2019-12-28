@@ -73,6 +73,13 @@
                     $('.user_info span').html('欢迎大佬：' + nickname);
                 }
             })
+            // 退出登录
+            $('.logout').click(function() {
+                // 删除 token
+                localStorage.removeItem('token');
+                // 跳转登录页
+                window.location.href = './login.html'
+            })
         })
     </script>
 </body>
