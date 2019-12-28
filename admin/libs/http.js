@@ -1,5 +1,25 @@
 /* 沙箱模式 */
 (function(w){
+    // 为所有ajax请求设置默认值
+    $.ajaxSetup({
+        //在发送ajax之前，给所有的请求都设置请求头（从localStorage中读取token）
+        beforeSend(xhr) {
+            // 如果不是登录页，在请求头统一带上 token
+            if (location.href.indexOf('admin/login.html') === -1) {
+                xhr.setRequestHeader("Authorization", localStorage.getItem('token'));
+            }
+        },
+        error(xhr, status, error) {//请求错误的时候会进入这个方法进行拦截
+            // debugger;
+            console.log('xhr', xhr);
+            console.log('status', status); //错误状态
+            console.log('error', error); //错误信息
+            if (error == 'Forbidden') { //用户未登录
+                alert('请先登录！')
+                window.location = './login.html'; //跳转登陆页面
+            };
+        }
+    });
     var baseURL = 'http://localhost:8080/api/v1'
     var BigNew = {
         baseURL:baseURL,//基地址
