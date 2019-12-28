@@ -37,14 +37,36 @@
       </form>
     </div>
   </div>
+
+    <!-- 模态框 -->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">友情提示</h4>
+          </div>
+          <div class="modal-body">
+            <p></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 <script>
   $(function(){
     $('.login_form').submit(function(e){
       e.preventDefault();
       const input_txt = $('.input_txt').val().trim();
       const input_pass = $('.input_pass').val().trim();
+
       if(input_txt === ''|| input_pass === '') {
-        alert('傻子，用户名或密码为空');
+        // alert('傻子，用户名或密码为空');
+        $(".modal-body>p").text('用户名与密码不能为空');
+        $('#myModal').modal({keyboard:true});
         return;
       }
       console.log(input_txt,input_pass);
@@ -64,9 +86,17 @@
             const msg = response.msg;
             const token = response.token;
             if (code === 200) {
-              alert(msg);
-              localStorage.setItem('token', token);
-              location.href = './index.html';
+              // alert(msg);
+              // localStorage.setItem('token', token);
+              // location.href = './index.html';
+              $('.modal-body>p').text('登录成功');
+              $('#myModal').modal({ keyboard: true });//按ESC键可以关闭模态框
+              $('#myModal').on('hidden.bs.modal', function (e) {//模态框隐藏事件
+                    //1.将服务器返回的token存入localStorage
+                    localStorage.setItem('token',token);
+                    //2.跳转首页
+                    window.location.href = './index.html';
+                    });
             }else {
               alert(msg);
             }
