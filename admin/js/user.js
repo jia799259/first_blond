@@ -33,6 +33,7 @@ $(function() {
         // 禁用表单默认提交事件
         e.preventDefault();
         const fdObj = new FormData(this);
+        // FormData 这个搞不清楚
         $.ajax({
             url:BigNew.user_edit,
             type:'post',

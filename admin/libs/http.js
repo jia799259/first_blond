@@ -45,4 +45,24 @@
 
     //暴露接口
     w.BigNew = BigNew;
+    $('.level01').click(function() {
+        // 排他思想修改样式
+        $(this).addClass('active').siblings().removeClass('active');
+        // 如果点击的是文章管理，则应该下滑二级列表ul
+        if ($(this).next().hasClass('level02')) {
+            // 滑入滑出切换
+            $(this).next().slideToggle();
+            // 旋转90度切换
+            $(this).find('b').toggleClass('rotate0');
+            // 默认选中第一个： dom 对象
+            $('.level02>li>a').first()[0].click();
+        } else {
+            //如果点击的不是文章管理一级菜单列表，则移除耳机列表的选中样式
+            $('.level02>li').removeClass('active');
+        }
+    });
+    // 二级列表
+    $('.level02>li').click(function (){
+        $(this).addClass('active').siblings().removeClass('active');
+    })
 })(window);
